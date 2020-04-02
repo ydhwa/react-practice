@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';      // 리액트를 불러와서 사용할 수 있게 해줌
-import './App.css';
+import React, { Fragment } from "react"; // 리액트를 불러와서 사용할 수 있게 해줌
+import "./App.css";
 
 /*
  함수형 컴포넌트 사용.
@@ -8,7 +8,7 @@ import './App.css';
  이런 코드를 JSX라고 부른다.
  */
 function App() {
-  const name = '리액트';
+  const name = "리액트";
   return (
     <>
       <div className="react">{name}</div>

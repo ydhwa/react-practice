@@ -141,7 +141,7 @@ export default App;
 ```
 
 
-## 인라인 스타일링
+### 인라인 스타일링
 리액트에서 DOM 요소에 스타일을 적용할 때는 문자열 형태로 넣는 것이 아니라 객체 형태로 넣어 주어야 한다. 스타일 이름 중 `background-color`처럼 `-`가 포함되는 이름은 `backgroundColor`처럼 낙타 표기법으로 작성해야 한다.
 
 ```javascript
@@ -182,7 +182,7 @@ export default App;
 ```
 
 
-## `class` 대신 `className`
+### `class` 대신 `className`
 _App.css_
 ```css
 .react {
@@ -208,11 +208,11 @@ export default App;
 요즘 버전에서는 `class`를 사용해도 오류가 발생하지 않으나, 브라우저 개발자 도구의 console 창으로 확인해보면 경고를 남기고 `className`으로 변환된다.
 
 
-## 꼭 닫아야 하는 태그
+### 꼭 닫아야 하는 태그
 `input` HTML 요소는 태그를 닫지 않아도 정상동작하나, JSX에서는 태그를 닫지 않으면 오류가 발생한다.
 
 
-## 주석
+### 주석
 - JSX 내부: `{/* ... */}`
 - 시작 태그 내부: `// ...`
 
