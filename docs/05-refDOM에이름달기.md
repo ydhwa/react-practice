@@ -77,3 +77,19 @@ export default RefSample;
 
 위와 같이 사용하면 MyComponent 내부의 메서드 및 멤버 변수에도 접근할 수 있으며, 내부의 ref에도 접근할 수 있다.(ex) myComponent.handleClick, myComponent.input, ...)
 
+### Note
+DOM 노드가 가지고 있는 값
+- scrollTop: 세로 스크롤바 위치
+- scrollHeight: 스크롤이 있는 박스 안의 div 높이
+- clientHeight: 스크롤이 있는 박스의 높이
+
+맨 밑으로: scrollHeight - clientHeight
+
+## 정리
+컴포넌트 내부에서 DOM에 직접 접근해야 할 때는 ref를 사용한다. 먼저 ref를 사용하지 않고도 원하는 기능을 구현할 수 있는지 반드시 고려한 후에 활용해야 한다.
+
+서로 다른 컴포넌트끼리 데이터 교류 시 ref를 사용하는 것은 잘못된 사용이다. 불가능한 것은 아니지만 리액트 사상에 어긋나는 설계이며, 앱 규모가 커질 경우 유지 보수가 힘들어진다.
+
+컴포넌트끼리 데이터를 교류할 때는 언제나 데이터를 부모<->자식 흐름으로 교류해야 한다. 나중에 리덕스 혹은 Context API를 사용하여 효율적으로 교류할 수 있다.
+
+함수형 컴포넌트에서는 useRef라는 Hook 함수를 사용하여 ref를 사용할 수 있다. 사용법은 React.createRef와 유사하다.
