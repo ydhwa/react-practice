@@ -1,64 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useReducer } from "react";
+
+function reducer(state, action) {
+  return {
+    ...state,
+    [action.name]: action.value,
+  };
+}
 
 const Info = () => {
-  const [name, setName] = useState("");
-  const [nickname, setNickname] = useState("");
-
-  useEffect(() => {
-    console.log("렌더링이 완료되었습니다.");
-    console.log({
-      name,
-      nickname,
-    });
+  const [state, dispatch] = useReducer(reducer, {
+    name: "",
+    nickname: "",
   });
-
-  // 마운트될 때만 실행하고 싶을 때
-  // 두 번째 파라미터에 빈 배열을 넣어준다.
-  useEffect(() => {
-    console.log("마운트될 때만 실행됩니다.");
-  }, []);
-
-  // 특정 값이 업데이트될 때만 실행하고 싶을 때
-  // 두 번째 파라미터로 전달되는 배열 안에 검사하고 싶은 값을 넣어준다.
-  // 배열 안에는 useState를 통해 관리하고 있는 상태를 넣어 주어도 되고, props로 전달받은 값을 넣어 주어도 된다.
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
-
-  // 뒷정리하기
-  useEffect(() => {
-    // 컴포넌트가 나타날 때 발생
-    console.log("effect");
-    console.log(name);
-    return () => {
-      // 컴포넌트가 사라질 때 발생
-      console.log("cleanup");
-      console.log(name);
-    };
-  });
-
-  useEffect(() => {
-    console.log("effect unmount");
-    console.log(name);
-    return () => {
-      console.log("cleanup unmount");
-      console.log(name);
-    };
-  }, []);
-
-  const onChangeName = (e) => {
-    setName(e.target.value);
-  };
-
-  const onChangeNickname = (e) => {
-    setNickname(e.target.value);
+  const { name, nickname } = state;
+  const onChange = (e) => {
+    // e.target 값 자체를 액션 값으로 사용함
+    dispatch(e.target);
   };
 
   return (
     <div>
       <div>
-        <input value={name} onChange={onChangeName} />
-        <input value={nickname} onChange={onChangeNickname} />
+        <input name="name" value={name} onChange={onChange} />
+        <input name="nickname" value={nickname} onChange={onChange} />
       </div>
 
       <div>
