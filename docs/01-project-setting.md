@@ -1,8 +1,6 @@
-# 프로젝트 세팅
+# 프로젝트 준비
 
-## 프로젝트 준비
-
-### 프로젝트 생성 및 라이브러리 설치
+## 프로젝트 생성 및 라이브러리 설치
 
 ```bash
 yarn create react-app todo-app
@@ -15,7 +13,7 @@ yarn add node-sass classnames react-icons
 - react-icons: 리액트에서 제공하는 다양한 아이콘 사용하기 위해 설치
   - <https://react-icons.netlify.app/#/>
 
-### Prettier 설정
+## Prettier 설정
 
 프로젝트 최상위 디렉터리에 .prettierrc 파일 생성
 
@@ -30,7 +28,7 @@ yarn add node-sass classnames react-icons
 }
 ```
 
-### index.css 수정
+## index.css 수정
 
 ```css
 body {
@@ -40,6 +38,6 @@ body {
 }
 ```
 
-### App 컴포넌트 초기화
+## App 컴포넌트 초기화
 
 <코드 참고>
