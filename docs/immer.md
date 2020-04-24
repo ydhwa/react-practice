@@ -85,4 +85,37 @@ immer를 사용하여 컴포넌트 상태를 작성할 때는 객체 안에 있�
 
 immer를 사용한다고 해서 무조건 코드가 간결해지지는 않는다. 즉 immer는 불변성을 유지하는 코드가 복잡할 때만 사용해도 충분하다.
 
+### useState의 함수형 업데이트와 immer 함께 쓰기
+
+```javascript
+const [number, setNumber] = useState(0);
+// prevNumber는 현재 number 값을 가리킨다.
+const onIncrease = useCallback(
+  () => setNumber((prevNumber) => prevNumber + 1),
+  []
+);
+```
+
+immer에서 제공하는 produce 함수를 호출할 때, 첫 번째 파라미터가 함수 형태라면 업데이트 함수를 반환한다.
+
+```javascript
+const update = produce((draft) => {
+  draft.value = 2;
+});
+const originalState = {
+  value: 1,
+  foo: "bar",
+};
+const nextState = update(originalState);
+console.log(nextState); // { value: 2, foo: 'bar' }
+```
+
+이러한 immer의 속성과 useState의 함수형 업데이트를 함께 활용하면 코드를 깔끔하게 만들 수 있다.
+
+<코드 참고 - App.js>
+
+produce 함수의 파라미터를 함수 형태로 사용함에 유의하여 보자.
+
 ## 정리
+
+immer 라이브러리는 컴포넌트의 상태 업데이트가 조금 까다로울 때 사용하면 아주 좋다. 상태 관리 라이브러리인 리덕스를 사용할 때도 immer를 쓰면 코드를 매우 쉽게 작성할 수 있다. 이러한 라이브러리는 편의를 위한 것이므로 반드시 필요하지는 않지만, 사용한다면 생산성을 높일 수 있다.
