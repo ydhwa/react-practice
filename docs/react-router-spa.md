@@ -167,4 +167,12 @@ Switch 컴포넌트는 여러 Route를 감싸서 그 중 일치하는 단 하나
 
 <코드 참고 - App.js>
 
+### NavLink
+
+NavLink는 Link와 비슷하다. 현재 경로와 Link에서 사용하는 경로가 일치하는 경우 특정 스타일 혹은 CSS 클래스를 적용할 수 있는 컴포넌트이다.
+
+NavLink에서 링크가 활성화되었을 때의 스타일을 적용할 때는 activeStyle 값을, CSS 클래스를 적용할 때는 activeClassName 값을 props로 넣어주면 된다.
+
+<코드 참고 - Profiles.js>
+
 ## 정리
