@@ -44,6 +44,22 @@ yarn add react-router-dom
 
 <코드 참고 - index.js>
 
+### 페이지 만들기
+
+<코드 참고 - Home.js, About.js>
+
+### Route 컴포넌트로 특정 주소에 컴포넌트 연결
+
+Route 컴포넌트를 사용하여 사용자의 현재 경로에 따라 다른 컴포넌트를 보여준다. Route 컴포넌트를 사용하면 어떤 규칙을 가진 경로에 어떤 컴포넌트를 보여 줄지 정의할 수 있다.
+
+```javascript
+<Route path="주소 규칙" component={보여 줄 컴포넌트} />
+```
+
+<코드 참고 - App.js>
+
+Route에 exact={true}로 설정해주면 규칙이 아니라 정확히 경로가 일치했을 때 해당 컴포넌트를 보여준다.
+
 ## Route 하나에 여러 개의 path 설정하기
 
 ## URL 파라미터와 쿼리
