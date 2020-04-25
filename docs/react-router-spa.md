@@ -161,4 +161,10 @@ WithRouterSample 컴포넌트를 Profiles에서 지우고 Profile 컴포넌트�
 
 <코드 참고 - Profile.js, Profiles.js>
 
+### Switch
+
+Switch 컴포넌트는 여러 Route를 감싸서 그 중 일치하는 단 하나의 라우트만을 렌더링시켜준다. Switch를 사용하면 모든 규칙과 일치하지 않을 때 보여줄 NotFound 페이지를 구현할 수 있다.
+
+<코드 참고 - App.js>
+
 ## 정리
