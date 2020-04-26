@@ -89,6 +89,14 @@ NewsList.js 컴포넌트를 클래스형 컴포넌트로 만들게 된다면 com
 yarn add react-router-dom
 ```
 
+NewsPage.js
+
+현재 선택된 category 값을 URL 파라미터로 통해 사용할 것이므로 Categories 컴포넌트에서 현재 선택된 카테고리 값을 알려 줄 필요도 없고, onSelect 함수를 따로 전달해 줄 필요도 없다.
+
+App.js
+
+Route 컴포넌트 안에 사용된 path에 /:category?와 같은 형태로 맨 뒤에 물음표 문자가 들어가는데, 이는 category값이 선택적(optional)이라는 의미이다. 즉, 있을 수도, 없을 수도 있다는 뜻이다. category URL 파라미터가 없다면 전체 카테고리를 선택한 것으로 간주한다.
+
 ## usePromise 커스텀 Hook 만들기
 
 ## 정리

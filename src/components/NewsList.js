@@ -43,7 +43,7 @@ const NewsList = ({ category }) => {
     };
     fetchData();
     // category 값이 바뀔 때마다 뉴스를 새로 불러와야 하기 때문에
-    // useEffect의 의존 배열(두 번째 파라미터)에 category를 넣어 주어야 한다.
+    // useEffect의 의존 배열(두 번째 파라미터)에 category를 넣어 주어야
   }, [category]);
 
   // 대기 중일 때

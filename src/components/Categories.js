@@ -1,5 +1,6 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 const categories = [
   {
@@ -43,7 +44,7 @@ const CategoriesBlock = styled.div`
   }
 `;
 
-const Category = styled.div`
+const Category = styled(NavLink)`
   font-size: 1.125rem;
   cursor: pointer;
   white-space: pre;
@@ -55,33 +56,34 @@ const Category = styled.div`
     color: #495057;
   }
 
+  &.active {
+    font-weight: 600;
+    border-bottom: 2px solid #22b8cf;
+    color: #22b8cf;
+    &:hover {
+      color: #3bc9db;
+    }
+    & + & {
+      margin-left: 1rem;
+    }
+  }
+
   & + & {
     margin-left: 1rem;
   }
-
-  ${(props) =>
-    props.active &&
-    css`
-      font-weight: 600;
-      border-bottom: 2px solid #22b8cf;
-      color: #22b8cf;
-      &:hover {
-        color: #3bc9db;
-      }
-      & + & {
-        margin-left: 1rem;
-      }
-    `}
 `;
 
-const Categories = ({ onSelect, category }) => {
+const Categories = () => {
   return (
     <CategoriesBlock>
       {categories.map((c) => (
         <Category
           key={c.name}
-          active={category === c.name}
-          onClick={() => onSelect(c.name)}
+          activeClassName="active"
+          // to 값이 /를 가리키고 있을 때는 exact 값을 true로 해줘야 한다.
+          // 이 값을 설정하지 않으면 다른 카테고리가 선택되었을 때도 전체보기 링크에 active 스타일이 적용된다.
+          exact={c.name === 'all'}
+          to={c.name === 'all' ? '/' : `/${c.name}`}
         >
           {c.text}
         </Category>
