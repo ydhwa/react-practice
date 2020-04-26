@@ -63,6 +63,8 @@ VS Code에서 파일 자동 불러오기 기능을 잘 활용하고 싶으면 js
 
 ## 뉴스 뷰어 UI 만들기
 
+<코드 참고 - NewsItem.js, NewsList.js, App.js>
+
 ## 데이터 연동하기
 
 ## 카테고리 기능 구현하기
