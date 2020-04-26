@@ -79,6 +79,10 @@ loading 상태를 관리하여 API 요청이 대기 중인지도 판별한다. �
 
 ## 카테고리 기능 구현하기
 
+<코드 참고>
+
+NewsList.js 컴포넌트를 클래스형 컴포넌트로 만들게 된다면 componentDidMount와 componentDidUpdate에서 요청을 시작하도록 설정해 주어야 하는데, 함수형 컴포넌트라면 useEffect 한 번으로 컴포넌트가 맨 처음 렌더링될 때, 그리고 category 값이 바뀔 때 요청하도록 설정해줄 수 있다.
+
 ## 리액트 라우터 적용하기
 
 ## usePromise 커스텀 Hook 만들기
