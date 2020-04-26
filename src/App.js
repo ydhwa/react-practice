@@ -6,7 +6,7 @@ const App = () => {
   const onClick = async () => {
     try {
       const response = await axios.get(
-        'https://jsonplaceholder.typicode.com/todos/1',
+        'https://newsapi.org/v2/top-headlines?country=kr&apiKey=0d306c2dabe8435baa10fa9491cca281',
       );
       setData(response.data);
     } catch (e) {

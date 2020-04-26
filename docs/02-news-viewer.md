@@ -39,6 +39,28 @@ VS Code에서 파일 자동 불러오기 기능을 잘 활용하고 싶으면 js
 
 ## newsapi API 키 발급받기
 
+<https://newsapi.org/register> 에서 API 키 발급받는다.
+
+```
+0d306c2dabe8435baa10fa9491cca281
+```
+
+발급받은 API 키는 추후 API를 요청할 때 API 주소의 쿼리 파라미터로 넣어서 사용하면 된다.
+
+한국 뉴스 가져오는 API 설명서 - <https://newsapi.org/s/south-korea-news-api>
+
+**사용할 API 주소**
+
+1. 전체 뉴스 불러오기
+   ```
+   GET https://newsapi.org/v2/top-headlines?country=kr&apiKey={API키}
+   ```
+2. 특정 카테고리 뉴스 불러오기
+   ```
+   GET https://newsapi.org/v2/top-headlines?country=kr&category={카테고리}&apiKey={API키}
+   ```
+   카테고리: business | entertainment | health | science | sports | technology
+
 ## 뉴스 뷰어 UI 만들기
 
 ## 데이터 연동하기
