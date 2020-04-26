@@ -85,6 +85,10 @@ NewsList.js 컴포넌트를 클래스형 컴포넌트로 만들게 된다면 com
 
 ## 리액트 라우터 적용하기
 
+```bash
+yarn add react-router-dom
+```
+
 ## usePromise 커스텀 Hook 만들기
 
 ## 정리
