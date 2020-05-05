@@ -39,7 +39,33 @@ createContext의 기본값을 실제 Provider의 value에 넣는 객체의 형�
 
 ## Consumer 대신 Hook 또는 static contextType 사용하기
 
+### useContext Hook 사용하기
+
+리액트에 내장되어 있는 Hooks 중에서 useContext Hook을 사용하면 함수형 컴포넌트에서 Context를 아주 편하게 사용할 수 있다.
+
+<코드 참고 - ColorBox.js>
+
+children에 함수를 전달하는 Render Props 패턴이 불편하다면 useContext Hook을 사용하여 편하게 Context 값을 조회할 수 있다.
+
+단, Hook은 함수형 컴포넌트에서만 사용할 수 있다는 점에 주의하자.
+
+### static contextType 사용하기
+
+클래스형 컴포넌트에서 Context 쉽게 사용하려면 static contextType을 정의하는 방법이 있다. Consumer쪽 코드는 제거하자.
+
+<코드 참고 - SelectColors.js>
+
+static contextType을 정의하면 클래스 메서드에서도 Context에 넣어 둔 함수를 호출할 수 있다는 장점이 있다.
+
+단점은, 한 클래스에서 하나의 Context밖에 사용하지 못한다는 것이다. 새로운 컴포넌트 작성 시 클래스형으로 작성하는 일은 많지 않기 때문에 가급적 useContext을 사용하도록 하자.
+
 ## 정리
+
+기존에는 컴포넌트 간에 상태를 교류해야 할 때 무조건 부모 -> 자식 흐름으로 props를 통해 전달해 주었으나, 이제는 Context API를 통해 더욱 쉽게 상태를 교류할 수 있게 되었다.
+
+프로젝트의 컴포넌트 구조가 꽤 간단하고 다루는 상태의 종류가 많지 않다면 굳이 Context를 사용할 필요는 없다. 하지만 전역적으로 여기저기서 사용되는 상태가 있고 컴포넌트의 개수가 많은 상황이라면 Context API를 사용하는 것을 권장한다.
+
+다음 장에서는 리덕스라는 상태 관리 라이브러리를 배우는데, 리덕스 역시 Context API 기반으로 만들어져 있으며, 전역 상태 관리를 도와준다. 단순한 전역 상태 관리라면 Context API를 사용해도 되겠지만, 리덕스는 더욱 향상된 성능과 미들웨어 기능, 강력한 개발자 도구, 코드의 높은 유지 보수성을 제공하기 때문에 모든 상황에 대해 대처하기가 쉽지는 않다.
 
 ## Note
 
