@@ -1,6 +1,6 @@
 # Context API
 
-2020-05-01
+2020-05-01 ~ 2020-05-05
 
 ## 들어가기 전에
 
@@ -30,6 +30,12 @@ yarn create react-app context-tutorial
 기존 createContext 함수를 사용할 때는 파라미터로 Context의 기본 상태를 넣어주었으나, 이 기본값은 Provider를 사용하지 않았을 때만 사용된다. Provider를 사용했으나 value를 명시하지 않는다면 이 기본값을 사용하지 않으므로 오류가 발생한다.
 
 ## 동적 Context 사용하기
+
+Context의 value에는 무조건 상태 값만 있어야 하는 것이 아니라, 함수를 전달해 줄 수도 있다.
+
+<코드 참고 - color.js, App.js, ColorBox.js, SelectColors.js>
+
+createContext의 기본값을 실제 Provider의 value에 넣는 객체의 형태와 일치시켜주는 것이 좋다. 그렇게 하면 Context 코드를 볼 때 내부 값이 어떻게 구성되어 있는지 파악하기도 쉽고, 실수로 Provider를 사용하지 않았을 때 리액트 애플리케이션에서 에러가 발생하지 않는다.
 
 ## Consumer 대신 Hook 또는 static contextType 사용하기
 
