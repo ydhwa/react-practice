@@ -134,6 +134,18 @@ increase: () => {
 
 ## 리덕스 더 편하게 사용하기
 
+액션 생성 함수, 리듀서를 작성할 때 redux-actions 라이브러리와 immer 라이브러리를 활용하면 리덕스를 훨씬 편하게 사용할 수 있다.
+
+### redux-actions
+
+redux-actions를 사용하면 액션 생성 함수를 더 짧은 코드로 작성할 수 있다. 그리고 리듀서 작성 시 `switch/case` 문이 아닌 `handleActions`라는 함수를 사용하여 각 액션마다 업데이트 함수를 설정하는 형식으로 작성해줄 수 있다.
+
+```
+yarn add redux-actions
+```
+
+### immer
+
 ## Hooks를 사용하여 컨테이너 컴포넌트 만들기
 
 ## 정리
