@@ -120,6 +120,18 @@ const store = createState(rootReducer, composeWithDevTools());
 
 ## 컨테이너 컴포넌트 만들기
 
+```javascript
+// 다음 두 코드는 작동 방식이 완전히 같음
+increase: () => dispatch(increase());
+increase: () => {
+  return dispatch(increase());
+};
+```
+
+컴포넌트에서 액션을 디스패치하기 위해 각 액션 생성 함수를 호출하고 dispatch로 감싸는 작업이 번거롭다면, 리덕스에서 제공하는 bindActionCreators 유틸 함수를 사용하면 간편하다.
+
+이 방법보다 더 편한 방법이 있는데, mapDispatchToProps에 해당하는 파라미터를 함수 형태가 아닌 액션 생성 함수로 이루어진 객체 형태로 넣어주는 것이다.
+
 ## 리덕스 더 편하게 사용하기
 
 ## Hooks를 사용하여 컨테이너 컴포넌트 만들기
