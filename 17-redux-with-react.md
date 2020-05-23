@@ -146,6 +146,10 @@ yarn add redux-actions
 
 ### immer
 
+```
+yarn add immer
+```
+
 ## Hooks를 사용하여 컨테이너 컴포넌트 만들기
 
 ## 정리
