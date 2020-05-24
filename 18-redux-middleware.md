@@ -33,6 +33,14 @@ yarn add redux react-redux redux-actions
 
 이러한 미들웨어 속성을 사용하여 네트워크 요청과 같은 비동기 작업을 관리하면 매우 유용하다.
 
+### redux-logger 사용하기
+
+오픈 소스 커뮤니티에 올라와 있는 redux-logger 미들웨어 설치 및 사용해보기
+
+```
+yarn add redux-logger
+```
+
 ## 비동기 작업을 처리하는 미들웨어 사용
 
 ## 정리
