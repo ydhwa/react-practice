@@ -119,4 +119,31 @@ yarn add redux-devtools-extension
 - takeEvery: 디스패치되는 모든 액션에 대해 액션을 발생시켜 준다.
 - takeLatest: 여러 액션이 중첩되어 디스패치되었을 때는 기존의 것들을 무시하고 가장 마지막 액션만 제대롤 처리한다.
 
+#### 유용한 기능
+
+- 사가 내부에서 현재 상태 조회: select
+
+  ```javascript
+  function* increaseSaga() {
+    yield delay(1000);
+    yield put(increase()); // 특정 액션 디스패치함
+
+    const number = yield select((state) => state.counter); // state는 스토어 상태를 의미함
+    console.log(`현재 값은 ${number} 입니다.`);
+  }
+  ```
+
+- 사가가 실행되는 주기 제한: throttle (사가가 n초에 단 한 번만 호출되도록 설정 가능)
+
+- 그 외 기능들은 공식 문서(<https://redux-saga.js.org/>) 참고
+
 ## 정리
+
+리덕스 미들웨어를 사용하는 방법과 비동기 작업을 미들웨어로 처리하는 방법에 대해서 알아보았다.
+
+- redux-thunk: 일반 함수로 이루어져 있기 때문에 간단명료함
+- redux-saga: 진입 장벽이 있으나 복잡한 상황에서 효율적으로 작업을 관리할 수 있음
+
+이 외에도 비동기 작업을 할 때는 redux-promise-middleware, redux-pender, redux-observable 등 미들웨어를 시도해 봐도 좋다.
+
+아니면 미들웨어를 사용하지 않고 그냥 컴포넌트 단에서 API를 요청하는 방법도 틀린 방법은 아니다. 리덕스 미들웨어를 사용하는 이유는 결국 좀 더 편하게 처리하기 위해서이기 때문이다.
