@@ -43,4 +43,32 @@ yarn add redux-logger
 
 ## 비동기 작업을 처리하는 미들웨어 사용
 
+- redux-thunk: 비동기 작업을 처리할 때 가장 많이 사용하는 미들웨어. 객체가 아닌 함수 형태의 액션을 디스패치할 수 있게 해줌
+- redux-saga: redux-thunk 다음으로 가장 많이 사용되는 비동기 작업 관련 미들웨어 라이브러리. 특정 액션이 디스패치되었을 때 정해진 로직에 따라 다른 액션을 디스패치시키는 규칙을 작성하여 비동기 작업을 처리할 수 있게 해줌
+
+### redux-thunk
+
+Thunk란 특정 작업을 나중에 할 수 있도록 미루기 위해 함수 형태로 감싼 것이다.
+
+```
+yarn add redux-thunk
+```
+
+### 웹 요청 비동기 작업 처리하기
+
+thunk의 속성을 활용하여 웹 요청 비동기 작업을 처리하는 방법 알아보기.
+
+예시 데이터: <https://jsonplaceholder.typicode.com/>
+
+```
+GET https://jsonplaceholder.typicode.com/posts/:id
+GET https://jsonplaceholder.typicode.com/users
+```
+
+API 호출 시 주로 Promise 기반 웹 클라이언트인 axios를 사용한다.
+
+```
+yarn add axios
+```
+
 ## 정리
