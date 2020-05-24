@@ -152,4 +152,48 @@ yarn add immer
 
 ## Hooks를 사용하여 컨테이너 컴포넌트 만들기
 
-## 정리
+리덕스 스토어와 연동된 컨테이너 컴포넌트 만들 때 connect 함수 사용하는 대신 react-redux에서 제공하는 Hooks를 사용할 수 있다.
+
+### useSelector로 상태 조회하기
+
+useSelector Hook을 사용하면 connect 함수를 사용하지 않고도 리덕스의 상태를 조회할 수 있다.
+
+```javascript
+const 결과 = useSelector(상태 선택 함수);
+```
+
+여기서 상태 선택 함수는 mapStateToProps와 형태가 똑같다.
+
+### useDispatch를 사용하여 액션 디스패치하기
+
+컴포넌트 성능을 최적화해야 하는 상황이 온다면 useCallback으로 액션을 디스패치하는 함수를 감싸주는 것이 좋다.
+
+useDispatch 사용할 때는 useCallback과 함께 사용하는 습관을 들이는 것이 좋다.
+
+### useStore를 사용하여 리덕스 스토어 사용하기
+
+useStore Hooks를 사용하면 컴포넌트 내부에서 리덕스 스토어 객체를 직접 사용할 수 있다.
+
+```javascript
+const store = useStore();
+store.dispatch({ type: "SAMPLE_ACTION" });
+store.getState();
+```
+
+useStore는 컴포넌트에서 정말 어쩌다가 스토어에 직접 접근해야 하는 상황에만 사용해야 한다. 이를 사용해야 하는 상황은 흔하지 않다.
+
+### TodosContainer를 Hooks로 전환하기
+
+TodosContainer를 connect 함수 대신에 useSelector와 useDispatch Hooks를 사용하는 형태로 전환해보자.
+
+### useActions 유틸 Hook을 만들어 사용하기
+
+useActions는 원래 react-redux에 내장된 상태로 릴리즈될 계획이었으나 리덕스 개발 팀에서 꼭 필요하지 않다고 판단하여 제외된 Hook이다. 대신 공식 문서에서 그대로 복사하여 사용할 수 있도록 제공하고 있다.
+
+<https://react-redux.js.org/next/api/hooks#recipe-useactions>
+
+이 Hook를 사용하면 여러 개의 액션을 사용해야 하는 경우 코드를 훨씬 깔끔하게 정리하여 작성할 수 있다. (/src/lib/)
+
+### connect 함수와의 주요 차이점
+- connect 함수를 사용하여 컨테이너 컴포넌트를 만들었을 경우: 해당 컨테이너 컴포넌트의 부모 컴포넌트가 리렌더링 될 때 해당 컨테이너 컴포넌트의 props가 바뀌지 않았다면 리렌더링이 자동으로 방지되어 성능이 최적화됨
+- useSelector를 사용하여 리덕스 상태를 조회했을 때는 최적화 작업이 자동으로 이루어지지 않으므로, 성능 최적화를 위해서는 React.memo를 컨테이너 컴포넌트에 사용해줘야 함
