@@ -73,4 +73,27 @@ Suspense에서 fallback props를 통해 로딩 중에 보여 줄 JSX를 지정�
 
 크롬 개발자 도구 - Network 탭에서 Online을 누르면 셀렉트 박스가 뜨는데, 여기서 Slow 3G를 선택하면 느린 네트워크 속도를 시뮬레이트 할 수 있다.
 
+### Loadable Components를 통한 코드 스플리팅
+
+Loadable Components는 코드 스플리팅을 편하게 하도록 도와주는 서드파티 라이브러리이다. 이 라이브러리의 이점은 서버 사이드 렌더링을 지원한다는 것이다.(React.lazy와 Suspense는 서버 사이드 렌더링을 지원하지 않는다.) 또한, 렌더링 하기 전에 필요할 때 스플리팅된 파일을 미리 불러올 수 있는 기능도 있다.
+
+#### 서버 사이드 렌더링이란?
+
+웹 서비스의 초기 로딩 속도 개선, 캐싱 및 검색 엔진 최적화를 가능하게 해주는 기술이다. 서버 사이드 렌더링을 사용하면 웹 서비스의 초기 렌더링을 사용자의 브라우저가 아닌 서버 쪽에서 처리한다. 사용자는 서버에서 렌더링한 HTML 결과물을 받아 와서 그대로 사용하기 때문에 초기 로딩 속도도 개선되고, 검색 엔진에서 크롤링할 때도 문제 없다.
+
+```
+# 라이브러리 설치
+yarn add @loadable/component
+```
+
+사용법은 React.lazy와 유사하나, Suspense를 사용할 필요는 없다.
+
+Loadable Components는 미리 불러오는 기능 외에도 타임아웃, 로딩 UI 딜레이, 서버 사이드 렌더링 호환 등 다양한 기능을 제공한다. (<https://loadable-components.com/docs/delay/>)
+
 ## 정리
+
+코드 스플리팅이 무엇인지, 컴포넌트를 어떻게 분리된 파일로 저장하고, 비동기적으로 불러와서 사용하는지 알아보았다.
+
+서버 사이드 렌더링을 할 계획이 없다면 React.lazy와 Suspense로 구현하고, 계획이 있다면 Loadable Components를 사용해햐 한다. 리액트 공식 문서에서도 서버 사이드 렌더링을 할 경우 Loadable Components 라이브러리를 사용하도록 권장하고 있다.
+
+React.lazy 공식 문서 - <https://reactjs.org/docs/code-splitting.html#reactlazy>
