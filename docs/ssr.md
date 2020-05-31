@@ -52,6 +52,10 @@ yarn start
 
 ## 프로젝트 준비하기
 
+```
+yarn add react-router-dom
+```
+
 ## 서버 사이드 렌더링 구현하기
 
 ## 데이터 로딩
