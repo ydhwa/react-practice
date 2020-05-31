@@ -13,8 +13,8 @@ const manifest = JSON.parse(
 
 const chunks = Object.keys(manifest.files)
   .filter((key) => /chunk\.js$/.exec(key)) // chunk.js로 끝나는 키를 찾아서
-  .map((key) => `<script src="${manifest.files[key]}><script>`) // 스크립트 태그로 변환하고
-  .join(""); // 합침;
+  .map((key) => `<script src="${manifest.files[key]}"></script>`) // 스크립트 태그로 변환하고
+  .join(""); // 합침
 
 function createPage(root) {
   return `
@@ -36,7 +36,7 @@ function createPage(root) {
         <div id="root">
             ${root}
         </div>
-        <script src="${manifest.files["funtime-main.js"]}"></script>
+        <script src="${manifest.files["runtime-main.js"]}"></script>
         ${chunks}
         <script src="${manifest.files["main.js"]}"></script>
     </body>
