@@ -193,6 +193,22 @@ yarn add redux react-redux redux-thunk axios
 
 서버 사이드 렌더링 할 때는 이미 있는 정보를 재요청하지 않게 처리하는 작업이 중요하다.
 
+### PreloadContext 만들기
+
+현재 getUsers 함수는 UsersContainer의 useEffect 부분(클래스형: componentDidMount)에 호출되는데, 서버 사이드 렌더링을 할 때는 useEffect나 componentDidMount에서 설정한 작업이 호출되지 않는다. 렌더링하기 전에 API를 요청한 뒤 스토어에 데이터를 담아야 하는데, 서버 환경에서 이러한 작업을 하려면 클래스형 컴포넌트가 지니고 있는 constructor 메서드를 사용하거나 render 함수 자체에서 처리해야 한다. 그리고 요청이 끝날 때까지 대기했다가 다시 렌더링해 주어야 한다.
+
+이 작업을 PreloadContext를 만들고, 이를 사용하는 Preloader 컴포넌트를 만들어 처리해 본다.
+
+PreloadContext는 서버 사이드 렌더링을 하는 과정에서 처리해야 할 작업들을 실행하고, 만약 기다려야 하는 프로미스(promise)가 있다면 프로미스를 수집한다. 모든 프로미스를 수집한 뒤, 수집된 프로미스들이 끝날 때까지 기다렸다가 그 다음에 다시 렌더링하면 데이터가 채워진 상태로 컴포넌트들이 나타나게 된다.
+
+Preloader 컴포넌트는 resolve 함수를 props로 받아 오며, 컴포넌트가 렌더링될 때 서버 환경에서만 resolve 함수를 호출해 준다. (`src/containers/UsersContainer.js`)
+
+### 서버에서 리덕스 설정 및 PreloadContext 사용하기
+
+서버에서 리덕스를 설정해 준다. 서버에서 리덕스를 설정하는 것은 브라우저에서 할 때와 비교하여 큰 차이가 없다. (`src/index.server.js`)
+
+서버가 실행될 때 스토어를 한 번만 만드는 것이 아니라, 요청이 들어올 때마다 새로운 스토어를 만든다는 점에 주의해야 한다.
+
 ## 서버 사이드 렌더링과 코드 스플리팅
 
 ## 서버 사이드 렌더링의 환경 구축을 위한 대안

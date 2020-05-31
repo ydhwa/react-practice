@@ -5,6 +5,11 @@ import { StaticRouter } from "react-router-dom";
 import App from "./App";
 import path from "path";
 import fs from "fs";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import rootReducer from "./modules";
+import PreloadContext, { Preloader } from "./lib/PreloadContext";
 
 // asset-manifest.json에서 파일 경로들을 조회한다.
 const manifest = JSON.parse(
@@ -51,11 +56,33 @@ const serverRender = (req, res, next) => {
   // 이 함수는 404가 떠야 하는 상황에 404를 띄우지 않고 서버 사이드 렌더링을 해 준다.
 
   const context = {};
+  const store = createStore(rootReducer, applyMiddleware(thunk));
+
+  const preloadContext = {
+    done: false,
+    promises: [],
+  };
   const jsx = (
-    <StaticRouter location={req.url} context={context}>
-      <App />
-    </StaticRouter>
+    <PreloadContext.Provider value={preloadContext}>
+      <Provider store={store}>
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      </Provider>
+    </PreloadContext.Provider>
   );
+
+  // renderToStaticMarkup: 리액트를 사용하여 정적인 페이지를 만들 때 사용하는 함수
+  // 이 함수로 만든 리액트 렌더링 결과물은 클라이언트 쪽에서 HTML DOM 인터랙션을 지원하기 힘들다.
+  // 지금 단계에서 renderToString 대신 renderToStaticMarkup을 사용한 이유는
+  // Preloader로 넣어 주었던 함수를 호출하기 위해서이다. 또한 이 함수의 처리 속도가 renderToString보다 좀 더 빠르다.
+  ReactDOMServer.renderToStaticMarkup(jsx); // renderToStaticMarkup으로 한 번 렌더링한다.
+  try {
+    await Promise.all(preloadContext.promises)  // 모든 프로미스를 기다린다.
+  } catch(e) {
+    return res.status(500)
+  }
+  preloadContext.done = true
 
   const root = ReactDOMServer.renderToString(jsx); // 렌더링을 하고
   res.send(createPage(root)); // 결과물 응답
