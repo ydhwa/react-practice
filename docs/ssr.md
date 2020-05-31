@@ -125,6 +125,56 @@ yarn build:server
 yarn start:server
 ```
 
+### 서버 코드 작성하기
+
+서버 사이드 렌더링을 처리할 서버를 작성해 본다. Express라는 Node.js 웹 프레임워크를 사용하여 웹 서버를 만든다. 이 과정은 꼭 Express가 아니어도 상관 없으며 Koa, Hapi 또는 connect 라이브러리를 사용하면 구현할 수 있다. 여기서 Express를 사용한 이유는 해당 프레임워크가 사용률이 가장 높고, 추후 정적 파일들을 호스팅할 때도 쉽게 구현할 수 있기 때문이다.
+
+```
+yarn add express
+```
+
+`index.server.js` 코드를 작성한다.
+
+이 과정에서 리액트 라우터 안에 들어 있는 StaticRouter 컴포넌트가 사용되었다. 이 라우터 컴포넌트는 주로 서버 사이드 렌더링 용도로 사용되는 라우터이다. props로 넣어 주는 location 값에 따라 라우팅해 준다. 지금은 req.url이라는 값을 넣어 주었는데, 여기서 req 객체는 요청에 대한 정보를 지니고 있다.
+
+StaticRouter에 context라는 props도 넣어 주었다. 이 값을 사용하여 나중에 렌더링한 컴포넌트에 따라 HTTP 상태 코드를 설정해 줄 수 있다.
+
+```bash
+yarn build:server
+yarn start:server
+
+# 화면 확인
+http://localhost:5000
+```
+
+자바스크립트를 로딩할 경우 현재 브라우저에 보이는 데이터가 어디에서 렌더링된 것인지 분간하기 어려울 것이다. 서버 사이드 렌더링이 정말 제대로 이루어졌는지 확인하려면 크롬 개발자 도구의 Network 탭을 열고 새로고침 해본다. 서버 사이드 렌더링이 잘 적용되었다면 컴포넌트 렌더링 결과가 문자열로 전달이 되는 것을 확인할 수 있다.
+
+### 정적 파일 제공하기
+
+Express에 내장되어 있는 static 미들웨어를 사용하여 서버를 통해 build에 있는 JS, CSS 정적 파일들에 접근할 수 있도록 해본다. (`index.server.js`)
+
+```
+yarn build
+```
+
+JS와 CSS 파일을 불러오도록 html에 코드를 삽입해줘야 하는데, 불러와야 하는 파일 이름은 매번 빌드할 때마다 바뀌기 때문에 빌드하고 나서 만들어지는 asset-manifest.json 파일을 참고하여 불러오도록 작성해야 한다.
+
+필요한 파일은 다음과 같다.
+
+```
+    "main.css": "/static/css/main.8fd2183d.chunk.css",
+    "main.js": "/static/js/main.500dde45.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.0932113c.js",
+    "static/js/2.b79d03d5.chunk.js": "/static/js/2.b79d03d5.chunk.js",
+```
+
+위 파일들을 html 내부에 삽입해 주어야 한다.
+
+```
+yarn build:server
+yarn start:server
+```
+
 ## 데이터 로딩
 
 ## 서버 사이드 렌더링과 코드 스플리팅
