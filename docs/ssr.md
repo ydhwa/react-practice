@@ -98,6 +98,33 @@ yarn add webpack-node-externals
 
 ### 빌드 스크립트 작성하기
 
+scripts/build.js의 스크립트는 클라이언트에서 사용할 빌드 파일을 만드는 작업을 한다. 이 스크립트와 비슷한 형식으로 서버에서 사용할 빌드 파일을 만드는 build.server.js 스크립트를 작성한다. (`scripts/build.server.js`)
+
+코드 작성 후 빌드가 잘 되는지 확인한다.
+
+- servedPath ISSUE (<https://github.com/velopert/learning-react/issues/259>)
+
+```
+node scripts/build.server.js
+node dist/server.js
+```
+
+매번 빌드하고 실행할 때마다 파일 경로를 입력하는 것이 번거로울 수 있으므로, package.json에서 스크립트를 생성하여 더 편하게 명령어를 입력할 수 있도록 한다. (`package.json`)
+
+```
+...
+    "start:server": "node dist/server.js",
+    "build:server": "node scripts/build.server.js"
+...
+```
+
+스크립트를 만든 후에는 다음 명령어로 서버를 빌드하고 시작할 수 있다.
+
+```
+yarn build:server
+yarn start:server
+```
+
 ## 데이터 로딩
 
 ## 서버 사이드 렌더링과 코드 스플리팅
