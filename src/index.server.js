@@ -9,7 +9,7 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./modules";
-import PreloadContext, { Preloader } from "./lib/PreloadContext";
+import PreloadContext from "./lib/PreloadContext";
 
 // asset-manifest.json에서 파일 경로들을 조회한다.
 const manifest = JSON.parse(
@@ -21,7 +21,7 @@ const chunks = Object.keys(manifest.files)
   .map((key) => `<script src="${manifest.files[key]}"></script>`) // 스크립트 태그로 변환하고
   .join(""); // 합침
 
-function createPage(root) {
+function createPage(root, stateScript) {
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +41,7 @@ function createPage(root) {
         <div id="root">
             ${root}
         </div>
+        ${stateScript}
         <script src="${manifest.files["runtime-main.js"]}"></script>
         ${chunks}
         <script src="${manifest.files["main.js"]}"></script>
@@ -52,7 +53,7 @@ function createPage(root) {
 const app = express();
 
 // 서버 사이드 렌더링을 처리할 핸들러 함수
-const serverRender = (req, res, next) => {
+const serverRender = async (req, res, next) => {
   // 이 함수는 404가 떠야 하는 상황에 404를 띄우지 않고 서버 사이드 렌더링을 해 준다.
 
   const context = {};
@@ -78,14 +79,21 @@ const serverRender = (req, res, next) => {
   // Preloader로 넣어 주었던 함수를 호출하기 위해서이다. 또한 이 함수의 처리 속도가 renderToString보다 좀 더 빠르다.
   ReactDOMServer.renderToStaticMarkup(jsx); // renderToStaticMarkup으로 한 번 렌더링한다.
   try {
-    await Promise.all(preloadContext.promises)  // 모든 프로미스를 기다린다.
-  } catch(e) {
-    return res.status(500)
+    await Promise.all(preloadContext.promises); // 모든 프로미스를 기다린다.
+  } catch (e) {
+    return res.status(500);
   }
-  preloadContext.done = true
+  preloadContext.done = true;
 
   const root = ReactDOMServer.renderToString(jsx); // 렌더링을 하고
-  res.send(createPage(root)); // 결과물 응답
+
+  // JSON을 문자열로 변환하고 악성 스크립트가 실행되는 것을 방지하기 위해 <를 치환 처리
+  // https://redux.js.org/recipes/server-rendering#security-considerations
+  const stateString = JSON.stringify(store.getState()).replace(/</g, "\\u003c");
+  // 브라우저 상태 재사용 시 다음과 같이 스토어 생성 과정에서 window.__PRELOADED_STATE__를 초기값을 사용하면 된다.
+  const stateScript = `<script>__PRELOADED_STATE__=${stateString}</script>`; // 리덕스 초기 상태를 스크립트로 주입한다.
+
+  res.send(createPage(root, stateScript)); // 결과물 응답
 };
 
 const serve = express.static(path.resolve("./build"), {
