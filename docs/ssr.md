@@ -239,6 +239,18 @@ yarn build:server
 yarn start:server
 ```
 
+### usePreloader Hook 만들어서 사용하기
+
+지금까지 만든 컨테이너 컴포넌트에서는 Preloader 컴포넌트를 사용하여 서버 사이드 렌더링을 하기 전 데이터가 필요한 상황에 API를 요청하였다.
+
+이번에는 usePreloader라는 커스텀 Hook 함수를 만들어서 이 작업을 더욱 편하게 처리한다.
+
+```
+yarn build
+yarn build:server
+yarn start:server
+```
+
 ## 서버 사이드 렌더링과 코드 스플리팅
 
 ## 서버 사이드 렌더링의 환경 구축을 위한 대안
