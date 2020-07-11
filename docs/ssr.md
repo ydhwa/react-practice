@@ -219,6 +219,12 @@ yarn build:server
 yarn start:server
 ```
 
+### redux-saga 코드 준비하기
+
+```
+yarn add redux-saga
+```
+
 ## 서버 사이드 렌더링과 코드 스플리팅
 
 ## 서버 사이드 렌더링의 환경 구축을 위한 대안
