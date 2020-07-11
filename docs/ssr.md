@@ -2,6 +2,8 @@
 
 2020-05-27 ~ 2020-05-31
 
+2020-07-11
+
 ## 서버 사이드 렌더링의 이해
 
 서버 사이드 렌더링은 UI를 서버에서 렌더링하는 것을 의미한다. 클라이언트 사이드 렌더링은 UI 렌더링을 모두 브라우저에서 처리하는 것으로, 자바스크립트를 실행해야 우리가 만든 화면이 사용자에게 보여진다.
@@ -223,6 +225,18 @@ yarn start:server
 
 ```
 yarn add redux-saga
+```
+
+### redux-saga를 위한 서버 사이드 렌더링 작업
+
+redux-thunk를 사용하면 Preloader를 통해 호출한 함수들이 Promise를 반환하지만, redux-saga를 사용하면 Promise를 반환하지 않으므로 추가 작업이 필요하다.
+
+toPromise는 sagaMiddleware.run을 통해 만든 Task를 Promise로 변환한다. 별도의 작업을 하지 않으면 우리가 만든 루트 사가에서 액션을 끝없이 모니터링하기 때문에 이 Promise는 끝나지 않는다. 이는 redux-saga의 END 액션을 발생시키면 끝낼 수 있다. END 액션이 발생되면 액션 모니터링 작업이 모두 종료되고, 모니터링되기 전에 시작된 getUserSaga와 같은 사가 함수들이 있다면 해당 함수들이 완료되고 나서 Promise가 끝난다. 이 Promise가 끝나는 시점에 리덕스 스토어에는 우리가 원하는 데이터가 채워지고, 이후에 다시 렌더링하면 우리가 원하는 결과물이 나타난다.
+
+```
+yarn build
+yarn build:server
+yarn start:server
 ```
 
 ## 서버 사이드 렌더링과 코드 스플리팅
