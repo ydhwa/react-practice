@@ -253,6 +253,54 @@ yarn start:server
 
 ## 서버 사이드 렌더링과 코드 스플리팅
 
+리액트에서 공식적으로 제공하는 코드 스플리팅 기능인 React.lazy와 Suspense는 서버 사이드 렌더링을 아직 지원하지 않는다. 2019-04 기준, 리액스 공식 매뉴얼에서도 SSR과 코드 스플리팅을 함께 사용할 때는 Loadable Components를 사용할 것을 권장한다.
+
+Loadable Components에서는 서버 사이드 렌더링을 할 때 필요한 서버 유틸 함수와 웹팩 플러그인, babel 플러그인을 제공해 준다.
+
+```
+# Loadable Components 설치
+yarn add @loadable/component @loadable/server @loadable/webpack-plugin @loadable/babel-plugin
+```
+
+### 라우트 컴포넌트 스플리팅하기
+
+1. src/App.js 수정 후 서버 사이드 렌더링 재시작
+2. 크롬 개발자 도구의 Network 탭에서
+   1. 인터넷 속도: Slow 3G
+3. http://localhost:5000/users/1 에서 어떤 현상이 생기는지 확인
+   1. 깜박임 현상 확인
+
+### 웹팩과 babel 플러그인 적용
+
+Loadable Components에서 제공하는 웹팩과 babel 플러그인을 적용하면 깜박임 현상을 해결할 수 있다.
+
+bebel 플러그인 적용 (package.json)
+
+```json
+"babel": {
+    "presets": [
+        "react-app"
+    ],
+    "plugins": [
+        "@loadable/babel-plugin"
+    ]
+}
+```
+
+`config/webpack.config.js`을 열어서 상단에 LoadablePlugin을 불러오고, 하단에는 plugins를 찾아서 해당 플러그인을 적용한다.
+
+수정 후 `yarn build` 명령어 실행하고, build 디렉터리에 `loadbale-stats.json` 파일이 만들어졌는지 확인한다.
+
+위 파일은 각 컴포넌트의 코드가 어떤 청크 파일에 들어가 있는지에 대한 정보를 가지고 있다. 서버 사이드 렌더링을 할 때 이 파일을 참고하여 어떤 컴포넌트가 렌더링 되었는지에 따라 어떤 파일들을 사전에 불러와야 할 지 설정할 수 있다.
+
+### 필요한 청크 파일 경로 추출하기
+
+서버 사이드 렌더링 후 브라우저에서 어떤 파일을 사전에 불러와야 할지 알아내고 해당 파일들의 경로를 추출하기 위해 Loadable Components에서 제공하는 ChunkExtractor와 ChunkExtractorManager를 사용한다.
+
+### loadableReady와 hydrate
+
+Loadable Componants를 사용하면 성능을 최적화하기 위해 모든 자바스크립트 파일을 동시에 받아온다. 모든 스크립트가 로딩되고 나서 렌더링하도록 처리하기 위해서는 loadableReady라는 함수를 사용해줘야 한다. 추가로 리액트에는 render 함수 대신에 사용할 수 있는 `hydrate`라는 함수가 있다. 이 함수는 기존에 서버 사이드 렌더링된 결과물이 이미 있을 경우 새로 렌더링하지 않고 기존에 존재하는 UI에 이벤트만 연동하여 애플리케이션을 초기 구동할 때 필요한 리소스를 최소화함으로써 성능을 최적화해 준다.
+
 ## 서버 사이드 렌더링의 환경 구축을 위한 대안
 
 ## 정리
